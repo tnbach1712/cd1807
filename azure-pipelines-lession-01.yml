@@ -22,5 +22,5 @@ stages:
           - task: CmdLine@2
             displayName: Install newman
             inputs: |
-              echo $(pwd)
+              pwd
             
