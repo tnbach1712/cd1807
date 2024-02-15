@@ -9,11 +9,18 @@ trigger:
 pool:
   # vmImage: ubuntu-latest
   name: Default
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+  - stage: Build
+    displayName: Build and Test
+    jobs:
+      - job: BuildJob
+        displayName: Build Job
+        steps:
+          - bash: |
+              echo $(pwd)
+          - task: CmdLine@2
+            displayName: Install newman
+            inputs: |
+              echo $(pwd)
+            
