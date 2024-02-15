@@ -30,5 +30,7 @@ stages:
                 echo $(USER_PASSWORD) | sudo -S npm install -g newman
                 echo $(newman --version)
               workingDirectory: $(System.DefaultWorkingDirectory)
-
-          
+          - bash: |
+              echo $(newman run ./StarterAPIs.json)
+            workingDirectory: $(System.DefaultWorkingDirectory)
+            displayName: Run test 
