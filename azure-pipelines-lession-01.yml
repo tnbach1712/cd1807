@@ -10,6 +10,8 @@ pool:
   # vmImage: ubuntu-latest
   name: Default
 
+variables:
+  USER_PASSWORD: nguyenbach
 stages:
   - stage: Build
     displayName: Build and Test
@@ -19,8 +21,12 @@ stages:
         steps:
           - bash: |
               echo $(pwd)
+            workingDirectory: $(System.DefaultWorkingDirectory)
           - task: CmdLine@2
             displayName: Install newman
             inputs: 
-              script: 'echo $(pwd)'
-            
+              - script: 'echo $(pwd)'
+              - script: 'echo $(USER_PASSWORD) | sudo -S npm install -g newman'
+              - script: 'echo $(newman --version)'
+            workingDirectory: $(System.DefaultWorkingDirectory)
+          
