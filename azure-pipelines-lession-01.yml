@@ -26,7 +26,9 @@ stages:
             displayName: Install newman
             inputs: 
               - script: 'echo $(pwd)'
+                workingDirectory: $(System.DefaultWorkingDirectory)
               - script: 'echo $(USER_PASSWORD) | sudo -S npm install -g newman'
+                workingDirectory: $(System.DefaultWorkingDirectory)
               - script: 'echo $(newman --version)'
-            workingDirectory: $(System.DefaultWorkingDirectory)
+                workingDirectory: $(System.DefaultWorkingDirectory)
           
