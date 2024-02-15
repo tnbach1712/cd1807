@@ -25,10 +25,10 @@ stages:
           - task: CmdLine@2
             displayName: Install newman
             inputs: 
-              - script: 'echo $(pwd)'
-                workingDirectory: $(System.DefaultWorkingDirectory)
-              - script: 'echo $(USER_PASSWORD) | sudo -S npm install -g newman'
-                workingDirectory: $(System.DefaultWorkingDirectory)
-              - script: 'echo $(newman --version)'
-                workingDirectory: $(System.DefaultWorkingDirectory)
+              script: |
+                echo $(pwd)
+                echo $(USER_PASSWORD) | sudo -S npm install -g newman
+                echo $(newman --version)
+              workingDirectory: $(System.DefaultWorkingDirectory)
+
           
