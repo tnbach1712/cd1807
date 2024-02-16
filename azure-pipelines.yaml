@@ -19,7 +19,7 @@ variables:
   backendAzureRmContainerName: 'tfstate'
 
 stages:
-- stage: Install dependencies
+- stage: InstallDependencies
   jobs:
   - job: InstallDependencies
     steps:
@@ -44,7 +44,8 @@ stages:
           sudo apt update
           sudo apt-get install terraform
         workingDirectory: $(System.DefaultWorkingDirectory)
-- stage: build
+- stage: Build
+  dependsOn: InstallDependencies
   jobs:
     - job: build
       steps:
