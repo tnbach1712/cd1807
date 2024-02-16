@@ -17,7 +17,7 @@ variables:
   backendAzureRmResourceGroupName: 'bachtn-demo'
   backendAzureRmStorageAccountName: 'tfstate2176126194'
   backendAzureRmContainerName: 'tfstate'
-
+  subscriptionID: fbda4cc5-31d3-4801-9427-d377d6038291
 stages:
 - stage: InstallDependencies
   jobs:
@@ -84,8 +84,8 @@ stages:
         displayName: 'Azure File Copy - Upload Terraform State'
         inputs:
           sourcePath: '$(System.DefaultWorkingDirectory)/terraform/environments/test/test.terraform.tfstate' # Replace with the path to your Terraform state file
-          azureSubscription: 'your_subscription' # Replace with the Azure subscription name or ID
+          azureSubscription: '$(subscriptionID)' # Replace with the Azure subscription name or ID
           destination: 'AzureBlob'
-          storage: $(backendAzureRmStorageAccountName)
-          containerName: $(backendAzureRmContainerName)
+          storage: '$(backendAzureRmStorageAccountName)'
+          containerName: '$(backendAzureRmContainerName)'
           sasTokenTimeOutInMinutes: 60
