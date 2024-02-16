@@ -69,3 +69,23 @@ stages:
         inputs:
           script: 'terraform plan'
           workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+      - task: CmdLine@2
+        displayName: Terraform Apply
+        inputs:
+          script: 'terraform apply -auto-approve'
+          workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+      - task: CmdLine@2
+        displayName: Show tree 
+        inputs:
+          script: 'ls'
+          workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+
+      - task: AzureFileCopy@4
+        displayName: 'Azure File Copy - Upload Terraform State'
+        inputs:
+          sourcePath: '$(System.DefaultWorkingDirectory)/terraform/environments/test/test.terraform.tfstate' # Replace with the path to your Terraform state file
+          azureSubscription: 'your_subscription' # Replace with the Azure subscription name or ID
+          destination: 'AzureBlob'
+          storage: $(backendAzureRmStorageAccountName)
+          containerName: $(backendAzureRmContainerName)
+          sasTokenTimeOutInMinutes: 60
