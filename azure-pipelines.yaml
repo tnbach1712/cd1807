@@ -84,7 +84,6 @@ stages:
         displayName: 'Azure File Copy - Upload Terraform State'
         inputs:
           sourcePath: '$(System.DefaultWorkingDirectory)/terraform/environments/test/test.terraform.tfstate' # Replace with the path to your Terraform state file
-          azureSubscription: '$(subscriptionID)' # Replace with the Azure subscription name or ID
           destination: 'AzureBlob'
           storage: '$(backendAzureRmStorageAccountName)'
           containerName: '$(backendAzureRmContainerName)'
