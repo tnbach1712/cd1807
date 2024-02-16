@@ -44,6 +44,7 @@ stages:
           sudo apt update
           sudo apt-get install terraform
         workingDirectory: $(System.DefaultWorkingDirectory)
+
 - stage: Build
   dependsOn: InstallDependencies
   jobs:
@@ -88,3 +89,4 @@ stages:
           storage: '$(backendAzureRmStorageAccountName)'
           containerName: '$(backendAzureRmContainerName)'
           sasTokenTimeOutInMinutes: 60
+          azureSubscription: $(subscriptionID)
