@@ -76,7 +76,6 @@
 
 name: Azure Pipelines
 
-environment: bachtn-env
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -99,6 +98,9 @@ stages:
 - stage: InstallDependencies
   jobs:
   - job: InstallDependencies
+    environment: 
+      name: bachtn-env  # Ensure this matches the environment name in Azure DevOps
+      resourceType: virtualMachine 
     steps:
     - task: CmdLine@2
       displayName: Check Terraform Installed
