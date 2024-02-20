@@ -15,3 +15,5 @@ stages:
           - checkout: none  # Assuming no code checkout is needed for the deployment script
           - script: echo Deploying to $(environment.name)
             displayName: 'Deploy Script'
+          - script: echo $(env)
+            displayName: 'Show env'
