@@ -6,7 +6,7 @@ stages:
     displayName: Deploy Job
     pool: Default
     environment: 
-      name: bachnt-env  # Ensure this matches the environment name in Azure DevOps
+      name: bachtn-env  # Ensure this matches the environment name in Azure DevOps
       resourceType: virtualMachine  # Or 'kubernetes' for Kubernetes environments
     strategy:
       runOnce:
