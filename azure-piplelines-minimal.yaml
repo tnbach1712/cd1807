@@ -98,15 +98,15 @@ stages:
 - stage: InstallDependencies
   jobs:
   - job: InstallDependencies
-    environment: 
-      name: bachtn-env  # Ensure this matches the environment name in Azure DevOps
-      resourceType: virtualMachine 
     steps:
     - task: CmdLine@2
       displayName: Check Terraform Installed
       inputs:
         script: 'echo $(terraform -v)'
         workingDirectory: $(System.DefaultWorkingDirectory)
+      environment: 
+        name: bachtn-env  # Ensure this matches the environment name in Azure DevOps
+        resourceType: virtualMachine 
     - task: CmdLine@2
       displayName: Install Terraform if not exists
       continueOnError: true
