@@ -19,7 +19,7 @@ client_secret = "SZw8Q~G99KHOdEXmiqxSCeUXucIyvpXLocVJZbdN"
 # Resource Group/Location
 location = "East US"
 resource_group = "Azuredevops"
-application_type = "myApplication-bachtn"
+application_type = "myApplication-bachtn01"
 
 # Network
 virtual_network_name = "udacity-vnet"
