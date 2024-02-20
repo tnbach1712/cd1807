@@ -4,6 +4,12 @@ trigger:
 pool:
   name: Default
 
+variables:
+  ARM_CLIENT_ID: $(servicePrincipalId)
+  ARM_CLIENT_SECRET: $(servicePrincipalKey)
+  ARM_SUBSCRIPTION_ID: $(subscriptionId)
+  ARM_TENANT_ID: $(tenantId)
+
 stages:
 - stage: BuildInfrastructure
   displayName: 'Build Infrastructure'
@@ -37,6 +43,14 @@ stages:
     steps:
     - script: echo "Deploying Infrastructure..."
       displayName: 'Deploy Infrastructure'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'YourServiceConnectionNameOrId'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          echo "Running Azure CLI commands"
+          az group list --output table
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'latest'
