@@ -27,7 +27,7 @@ stages:
           sudo apt-get install terraform
         workingDirectory: $(System.DefaultWorkingDirectory)
   - job: BuildInfra
-    DependsOn: InstallDependencies
+    dependsOn: InstallDependencies
     steps:
     - script: echo "Deploying Infrastructure..."
       displayName: 'Deploy Infrastructure'
