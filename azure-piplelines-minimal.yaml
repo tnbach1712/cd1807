@@ -1,3 +1,9 @@
+trigger:
+- main
+
+pool:
+  name: Default
+
 stages:
 - stage: BuildInfrastructure
   displayName: 'Build Infrastructure'
