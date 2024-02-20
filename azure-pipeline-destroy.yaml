@@ -1,0 +1,52 @@
+trigger:
+- main
+
+pool:
+  name: Default
+
+variables:
+  azureServiceConnectionId: 'f5faa620-2f85-4f3b-a5b3-084dea5af704' #'myServiceConnection'
+  projectRoot: $(System.DefaultWorkingDirectory)
+  environmentName: 'test'
+  backendAzureRmResourceGroupName: 'Azuredevops'
+  backendAzureRmStorageAccountName: 'tfstate809015124'
+  backendAzureRmContainerName: 'tfstate'
+  subscriptionID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
+  ARM_CLIENT_ID: 63233d70-86e2-458d-b76a-ed3bb9831097
+  ARM_CLIENT_SECRET: SZw8Q~G99KHOdEXmiqxSCeUXucIyvpXLocVJZbdN
+  ARM_SUBSCRIPTION_ID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
+  ARM_TENANT_ID: f958e84a-92b8-439f-a62d-4f45996b6d07
+  ACCOUNT_KEY: 5yOOd3WXFKQVPyJ/xfk398pJ7zsPBbnDMFSwtTy28BjDq/H+OyRY4Wmbj/2mbQvP5u962wqupqe/+AStQr6xvQ==
+
+stages:
+- stage: DestroyInfra
+  dependsOn: []  # Depends on no other stage, can be adjusted as needed.
+  jobs:
+  - deployment: TerraformDestroy
+    displayName: 'Destroy Infrastructure'
+    environment: 
+      name: 'bachtn-env'  # The name of the environment with approval checks.
+      resourceType: 'VirtualMachine'  # or other appropriate type
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzureCLI@2
+              inputs:
+                azureSubscription: '$(azureServiceConnectionId)'
+                scriptType: 'bash'
+                scriptLocation: 'inlineScript'
+                inlineScript: |
+                  az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
+                  az account set --subscription $(ARM_SUBSCRIPTION_ID)
+                  az group list --output table
+
+            - task: TerraformInstaller@0
+              inputs:
+                terraformVersion: 'latest'
+            - script: |
+                terraform init -backend-config="storage_account_name=$(backendAzureRmStorageAccountName)" -backend-config="container_name=$(backendAzureRmContainerName)" -backend-config="access_key=$(ACCOUNT_KEY)" -backend-config="key=cicd/terraform.tfstate"
+              displayName: 'Initialize Terraform'
+            - script: |
+                terraform destroy -auto-approve tfplan
+              displayName: 'destroy Terraform Deployment'
