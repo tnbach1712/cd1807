@@ -56,7 +56,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
+          az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
           az account set --subscription $(ARM_SUBSCRIPTION_ID)
     # - task: AzureCLI@2
     #   inputs:
@@ -65,7 +65,7 @@ stages:
     #     scriptLocation: 'inlineScript'
     #     inlineScript: |
     #       echo "Running Azure CLI commands"
-    #       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
+    #       az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
     #       az account set --subscription $(ARM_SUBSCRIPTION_ID)
     #       az group list --output table
     - task: TerraformInstaller@0
