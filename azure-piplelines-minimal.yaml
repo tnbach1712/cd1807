@@ -31,9 +31,9 @@ stages:
     steps:
     - script: echo "Deploying Infrastructure..."
       displayName: 'Deploy Infrastructure'
-    - task: UseTerraform@0
+    - task: TerraformInstaller@0
       inputs:
-        version: 'latest'
+        terraformVersion: 'latest'
     - script: |
         terraform init #-backend-config="storage_account_name=$(storageAccountName)" -backend-config="container_name=$(containerName)" -backend-config="access_key=$(storageAccessKey)" -backend-config="key=cicd/terraform.tfstate"
       displayName: 'Initialize Terraform'
