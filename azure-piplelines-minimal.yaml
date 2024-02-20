@@ -124,7 +124,7 @@ stages:
 - stage: Build
   dependsOn: InstallDependencies
   jobs:
-    - job: build-Terraform
+    - job: buildTerraform
       steps:
       - task: CmdLine@2
         displayName: Install Terraform
@@ -166,8 +166,8 @@ stages:
       #     containerName: '$(backendAzureRmContainerName)'
       #     sasTokenTimeOutInMinutes: 60
       #     azureSubscription: $(subscriptionID)
-    - job: build newMan
-      dependsOn: build-Terraform
+    - job: buildNewMan
+      dependsOn: buildTerraform
       steps:
       - task: CmdLine@2
         displayName: Install Newman
