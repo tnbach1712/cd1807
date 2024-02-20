@@ -55,9 +55,11 @@ stages:
         azureSubscription: '$(azureServiceConnectionId)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
+        azureSubscription: $(azureServiceConnectionId)
         inlineScript: |
-          az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
-          az account set --subscription $(ARM_SUBSCRIPTION_ID)
+          # az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
+          # az account set --subscription $(ARM_SUBSCRIPTION_ID)
+          az group list --output table
     # - task: AzureCLI@2
     #   inputs:
     #     azureSubscription: $(azureServiceConnectionId)
