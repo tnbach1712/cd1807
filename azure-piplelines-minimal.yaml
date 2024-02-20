@@ -168,7 +168,7 @@ stages:
       #     azureSubscription: $(subscriptionID)
     - job: build newMan
       dependsOn: build-Terraform
-      step:
+      steps:
       - task: CmdLine@2
         displayName: Install Newman
         inputs:
