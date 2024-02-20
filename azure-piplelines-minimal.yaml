@@ -8,15 +8,15 @@ variables:
   azureServiceConnectionId: 'f5faa620-2f85-4f3b-a5b3-084dea5af704' #'myServiceConnection'
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
-  backendAzureRmResourceGroupName: 'bachtn-demo'
-  backendAzureRmStorageAccountName: 'tfstate2176126194'
+  backendAzureRmResourceGroupName: 'Azuredevops'
+  backendAzureRmStorageAccountName: 'tfstate809015124'
   backendAzureRmContainerName: 'tfstate'
   subscriptionID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
   ARM_CLIENT_ID: 63233d70-86e2-458d-b76a-ed3bb9831097
   ARM_CLIENT_SECRET: SZw8Q~G99KHOdEXmiqxSCeUXucIyvpXLocVJZbdN
   ARM_SUBSCRIPTION_ID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
   ARM_TENANT_ID: f958e84a-92b8-439f-a62d-4f45996b6d07
-
+  ACCOUNT_KEY: 5yOOd3WXFKQVPyJ/xfk398pJ7zsPBbnDMFSwtTy28BjDq/H+OyRY4Wmbj/2mbQvP5u962wqupqe/+AStQr6xvQ==
 stages:
 - stage: BuildInfrastructure
   displayName: 'Build Infrastructure'
@@ -59,21 +59,12 @@ stages:
           az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
           az account set --subscription $(ARM_SUBSCRIPTION_ID)
           az group list --output table
-    # - task: AzureCLI@2
-    #   inputs:
-    #     azureSubscription: $(azureServiceConnectionId)
-    #     scriptType: 'bash'
-    #     scriptLocation: 'inlineScript'
-    #     inlineScript: |
-    #       echo "Running Azure CLI commands"
-    #       az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
-    #       az account set --subscription $(ARM_SUBSCRIPTION_ID)
-    #       az group list --output table
+
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'latest'
     - script: |
-        terraform init #-backend-config="storage_account_name=$(storageAccountName)" -backend-config="container_name=$(containerName)" -backend-config="access_key=$(storageAccessKey)" -backend-config="key=cicd/terraform.tfstate"
+        terraform init -backend-config="storage_account_name=$(backendAzureRmStorageAccountName)" -backend-config="container_name=$(backendAzureRmContainerName)" -backend-config="access_key=$(ACCOUNT_KEY)" -backend-config="key=cicd/terraform.tfstate"
       displayName: 'Initialize Terraform'
       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
     - script: |
