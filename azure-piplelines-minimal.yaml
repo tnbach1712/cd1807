@@ -5,7 +5,7 @@ pool:
   name: Default
 
 variables:
-  azureServiceConnectionId: '05a406db-dead-4948-b254-4e15fb72e8af' #'myServiceConnection'
+  azureServiceConnectionId: 'f5faa620-2f85-4f3b-a5b3-084dea5af704' #'myServiceConnection'
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
   backendAzureRmResourceGroupName: 'bachtn-demo'
@@ -52,7 +52,7 @@ stages:
       displayName: 'Deploy Infrastructure'
     - task: AzureCLI@2
       inputs:
-        # azureSubscription: '$(azureServiceConnectionId)'
+        azureSubscription: '$(azureServiceConnectionId)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
