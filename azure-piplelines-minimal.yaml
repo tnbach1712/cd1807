@@ -11,10 +11,10 @@ variables:
   backendAzureRmResourceGroupName: 'bachtn-demo'
   backendAzureRmStorageAccountName: 'tfstate2176126194'
   backendAzureRmContainerName: 'tfstate'
-  subscriptionID: fbda4cc5-31d3-4801-9427-d377d6038291
+  subscriptionID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
   ARM_CLIENT_ID: 63233d70-86e2-458d-b76a-ed3bb9831097
   ARM_CLIENT_SECRET: SZw8Q~G99KHOdEXmiqxSCeUXucIyvpXLocVJZbdN
-  ARM_SUBSCRIPTION_ID: fbda4cc5-31d3-4801-9427-d377d6038291
+  ARM_SUBSCRIPTION_ID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
   ARM_TENANT_ID: f958e84a-92b8-439f-a62d-4f45996b6d07
 
 stages:
@@ -52,14 +52,22 @@ stages:
       displayName: 'Deploy Infrastructure'
     - task: AzureCLI@2
       inputs:
-        azureSubscription: $(azureServiceConnectionId)
+        azureSubscription: '$(azureServiceConnectionId)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          echo "Running Azure CLI commands"
           az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
           az account set --subscription $(ARM_SUBSCRIPTION_ID)
-          az group list --output table
+    # - task: AzureCLI@2
+    #   inputs:
+    #     azureSubscription: $(azureServiceConnectionId)
+    #     scriptType: 'bash'
+    #     scriptLocation: 'inlineScript'
+    #     inlineScript: |
+    #       echo "Running Azure CLI commands"
+    #       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
+    #       az account set --subscription $(ARM_SUBSCRIPTION_ID)
+    #       az group list --output table
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'latest'
