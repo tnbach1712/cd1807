@@ -71,6 +71,7 @@ stages:
         terraform plan -out=tfplan
       displayName: 'Plan Terraform Deployment'
       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
-    # - script: |
-    #     terraform apply -auto-approve tfplan
-    #   displayName: 'Apply Terraform Deployment'
+    - script: |
+        terraform apply -auto-approve tfplan
+      displayName: 'Apply Terraform Deployment'
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
