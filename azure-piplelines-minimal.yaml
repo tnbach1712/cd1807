@@ -143,3 +143,34 @@ stages:
               appName: myApplication-bachtn01-AppService
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               appType: webAppLinux
+- stage: Test
+  dependsOn: BuildDeployApplication
+  jobs:
+  - job: JUnitTest
+    steps:
+    - task: CmdLine@2
+      displayName: Install Newman
+      inputs:
+        script: 'sudo npm install -g newman'
+        workingDirectory: $(System.DefaultWorkingDirectory)
+    - task: CmdLine@2
+      displayName: Run Data Validation Tests
+      continueOnError: true
+      inputs:
+        script: 'newman run StarerAPIs.json'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+    # - task: CmdLine@2
+    #   displayName: Run Regression Tests
+    #   continueOnError: true
+    #   inputs:
+    #     script: 'newman run TestSuite.Regression.json -e Test.environment.json --reporters cli,junit --reporter-junit-export TEST-Regression.xml'
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+    # Postman - Publish Results 
+    # ToDo: Complete the task as explained here: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=trx%2Cyaml#yaml-snippet
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/TEST-*.xml'
+        searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+        mergeTestResults: true
+        testRunTitle: testRunTitle_$(BuilBuild.BuildIdd)

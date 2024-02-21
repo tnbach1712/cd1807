@@ -40,7 +40,6 @@ stages:
                   az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
                   az account set --subscription $(ARM_SUBSCRIPTION_ID)
                   az group list --output table
-
             - task: TerraformInstaller@0
               inputs:
                 terraformVersion: 'latest'
