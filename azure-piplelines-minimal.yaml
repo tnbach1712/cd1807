@@ -16,6 +16,7 @@ variables:
   ARM_CLIENT_SECRET: cCm8Q~T4xH9cW92VixauW4epMyxcn-jzsEh9qa0y
   ARM_SUBSCRIPTION_ID: de282839-e67a-4cbe-a2a6-de7145c67f52
   ARM_TENANT_ID: f958e84a-92b8-439f-a62d-4f45996b6d07
+  pythonVersion: 3.10
   ACCOUNT_KEY: rA+dzT5DStcajt8A14VRmMkaxMo6JmBm0q+ilchNmvVLEGSTCrUMCBPnkii4KKNit0EZd2jbZuZJ+AStEBYQOQ==
 stages:
 - stage: BuildInfrastructure
@@ -82,3 +83,57 @@ stages:
         echo "##vso[task.setvariable variable=appServiceName]$output"
       displayName: 'Set App Service Name as Variable'
       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+- stage: BuildDeployApplication
+  dependsOn: DeployInfrastructure
+  variables:
+    appServiceName: $[ stageDependencies.BuildInfrastructure.TerraformApply.outputs['Set App Service Name as Variable.appServiceName'] ]
+  jobs:
+  - job: BuildApp
+    steps:    
+      - script: |
+          python3.10 -m pip install --upgrade pip
+          python3.10 -m pip install setup
+          python3.10 -m pip install -r requirements.txt
+        workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
+        displayName: 'myStep 1'
+      - script: |
+          export PATH=$HOME/.local/bin:$PATH
+          make install
+        workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
+        displayName: 'myStep 2'
+
+      - script: |
+          export PATH=$HOME/.local/bin:$PATH
+          make install
+          make lint
+        workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
+        displayName:  'myStep 3 - Run lint tests'
+
+      - task: ArchiveFiles@2
+        displayName: 'myStep 4 - Archive files'
+        inputs:
+          rootFolderOrFile: $(System.DefaultWorkingDirectory)/fakeAPI
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
+
+      - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        displayName: 'myStep 5 - Upload package'
+        artifact: drop
+  - deployment: DeploymentJob
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(pythonVersion)'
+            displayName: 'Use Python version'
+
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App : flask-ml-service'
+            inputs:
+              azureSubscription: $(azureServiceConnectionId)
+              appName: $(appServiceName)
+              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip  
