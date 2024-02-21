@@ -144,7 +144,7 @@ stages:
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               appType: webAppLinux
 - stage: Test
-  dependsOn: BuildDeployApplication
+  # dependsOn: BuildDeployApplication
   jobs:
   - job: JUnitTest
     steps:
