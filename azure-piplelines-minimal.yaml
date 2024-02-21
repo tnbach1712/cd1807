@@ -148,6 +148,8 @@ stages:
   jobs:
   - job: JUnitTest
     steps:
+    - script: "echo $(node -v)"
+    - script: "echo $(npm -v)"
     - task: CmdLine@2
       displayName: Install Newman
       inputs:
