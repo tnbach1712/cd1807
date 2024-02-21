@@ -75,3 +75,9 @@ stages:
         terraform apply -auto-approve tfplan
       displayName: 'Apply Terraform Deployment'
       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+    - script: |
+      echo "Extracting output..."
+      output=$(terraform output -raw app_service_name)
+      echo "##vso[task.setvariable variable=appServiceName]$output"
+    displayName: 'Set App Service Name as Variable'
+    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
