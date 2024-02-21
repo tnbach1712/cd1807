@@ -134,10 +134,11 @@ stages:
             inputs:
               versionSpec: '$(pythonVersion)'
             displayName: 'Use Python version'
+          - script: 'echo 123'
           - script: 'echo $(appServiceName)'
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : flask-ml-service'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
-              appName: $(appServiceName)
+              appName: myApplication-bachtn01-AppService
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip  
