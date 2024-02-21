@@ -11,5 +11,5 @@ output "web_app_resource_id" {
 }
 
 output "app_service_name" {
-  value = azurerm_linux_web_app.test.id
+  value = azurerm_linux_web_app.test.name
 }
