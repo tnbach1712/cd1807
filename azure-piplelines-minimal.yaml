@@ -122,6 +122,7 @@ stages:
         displayName: 'myStep 5 - Upload package'
         artifact: drop
   - deployment: DeploymentJob
+    dependsOn: BuildApp
     environment:
       name: myVMLinux
     strategy:
