@@ -7,4 +7,4 @@ test:
 	# python -m pytest -vv test_hello.py
 	echo test
 lint:
-	pylint --disable=R,C test_hello.py
+	pylint --disable=R,C,W0311 app.py
