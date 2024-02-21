@@ -78,7 +78,7 @@ stages:
     - script: |
       echo "Extracting output..."
       echo $(terraform output -raw app_service_name)
-      # output=$(terraform output -raw app_service_name)
-      # echo "##vso[task.setvariable variable=appServiceName]$output"
-    displayName: 'Set App Service Name as Variable'
-    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+      output=$(terraform output -raw app_service_name)
+      echo "##vso[task.setvariable variable=appServiceName]$output"
+      displayName: 'Set App Service Name as Variable'
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
