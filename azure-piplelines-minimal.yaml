@@ -5,18 +5,18 @@ pool:
   name: Default
 
 variables:
-  azureServiceConnectionId: 'f5faa620-2f85-4f3b-a5b3-084dea5af704' #'myServiceConnection'
+  azureServiceConnectionId: '1af1dddc-cbba-49a8-895f-e86fe3b8e550' #'myServiceConnection'
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
   backendAzureRmResourceGroupName: 'Azuredevops'
-  backendAzureRmStorageAccountName: 'tfstate809015124'
+  backendAzureRmStorageAccountName: 'tfstate302478722'
   backendAzureRmContainerName: 'tfstate'
-  subscriptionID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
-  ARM_CLIENT_ID: 63233d70-86e2-458d-b76a-ed3bb9831097
-  ARM_CLIENT_SECRET: SZw8Q~G99KHOdEXmiqxSCeUXucIyvpXLocVJZbdN
-  ARM_SUBSCRIPTION_ID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
+  subscriptionID: de282839-e67a-4cbe-a2a6-de7145c67f52
+  ARM_CLIENT_ID: a98bebc2-b950-474d-ba23-ed538f34dc9b
+  ARM_CLIENT_SECRET: cCm8Q~T4xH9cW92VixauW4epMyxcn-jzsEh9qa0y
+  ARM_SUBSCRIPTION_ID: de282839-e67a-4cbe-a2a6-de7145c67f52
   ARM_TENANT_ID: f958e84a-92b8-439f-a62d-4f45996b6d07
-  ACCOUNT_KEY: 5yOOd3WXFKQVPyJ/xfk398pJ7zsPBbnDMFSwtTy28BjDq/H+OyRY4Wmbj/2mbQvP5u962wqupqe/+AStQr6xvQ==
+  ACCOUNT_KEY: rA+dzT5DStcajt8A14VRmMkaxMo6JmBm0q+ilchNmvVLEGSTCrUMCBPnkii4KKNit0EZd2jbZuZJ+AStEBYQOQ==
 stages:
 - stage: BuildInfrastructure
   displayName: 'Build Infrastructure'
