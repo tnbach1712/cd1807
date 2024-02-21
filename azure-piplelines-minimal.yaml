@@ -84,7 +84,7 @@ stages:
       displayName: 'Set App Service Name as Variable'
       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
 - stage: BuildDeployApplication
-  dependsOn: DeployInfrastructure
+  dependsOn: BuildInfrastructure
   variables:
     appServiceName: $[ stageDependencies.BuildInfrastructure.TerraformApply.outputs['Set App Service Name as Variable.appServiceName'] ]
   jobs:
@@ -122,6 +122,8 @@ stages:
         displayName: 'myStep 5 - Upload package'
         artifact: drop
   - deployment: DeploymentJob
+    environment:
+      name: myVMLinux
     strategy:
       runOnce:
         deploy:
