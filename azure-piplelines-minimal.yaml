@@ -16,7 +16,7 @@ variables:
   ARM_CLIENT_SECRET: cCm8Q~T4xH9cW92VixauW4epMyxcn-jzsEh9qa0y
   ARM_SUBSCRIPTION_ID: de282839-e67a-4cbe-a2a6-de7145c67f52
   ARM_TENANT_ID: f958e84a-92b8-439f-a62d-4f45996b6d07
-  pythonVersion: 3.10
+  pythonVersion: 3.8
   ACCOUNT_KEY: rA+dzT5DStcajt8A14VRmMkaxMo6JmBm0q+ilchNmvVLEGSTCrUMCBPnkii4KKNit0EZd2jbZuZJ+AStEBYQOQ==
 stages:
 - stage: BuildInfrastructure
