@@ -141,4 +141,5 @@ stages:
             inputs:
               azureSubscription: $(azureServiceConnectionId)
               appName: myApplication-bachtn01-AppService
-              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip  
+              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+              appType: webAppLinux
