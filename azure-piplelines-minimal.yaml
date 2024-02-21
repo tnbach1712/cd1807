@@ -82,11 +82,12 @@ stages:
         output=$(terraform output -raw app_service_name)
         echo "##vso[task.setvariable variable=appServiceName]$output"
       displayName: 'Set App Service Name as Variable'
+      name: exportOutput
       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
 - stage: BuildDeployApplication
   dependsOn: BuildInfrastructure
   variables:
-    appServiceName: $[ stageDependencies.BuildInfrastructure.TerraformApply.outputs['Set App Service Name as Variable.appServiceName'] ]
+    appServiceName: $[ stageDependencies.BuildInfrastructure.InstallDependencies.outputs.exportOutput.appServiceName ]
   jobs:
   - job: BuildApp
     steps:    
@@ -133,7 +134,7 @@ stages:
             inputs:
               versionSpec: '$(pythonVersion)'
             displayName: 'Use Python version'
-
+          - script: 'echo $(appServiceName)'
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : flask-ml-service'
             inputs:
