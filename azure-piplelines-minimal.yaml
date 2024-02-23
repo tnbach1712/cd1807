@@ -19,132 +19,132 @@ variables:
   pythonVersion: 3.8
   ACCOUNT_KEY: z2ezv7i2OYnoeWkizRcRVJA0al/38WzCzdk/B6ZC9zGH6oe2VxJelNJ4nNvoQ08Ke1mCBT8h/hjm+AStPmudpQ==
 stages:
-# - stage: BuildInfrastructure
-#   displayName: 'Build Infrastructure'
-#   jobs:
-#   - job: InstallDependencies
-#     displayName: 'Install Dependencies' 
-#     steps:
-#     - task: CmdLine@2
-#       displayName: Check Terraform Installed
-#       inputs:
-#         script: 'echo $(terraform -v)'
-#         workingDirectory: $(System.DefaultWorkingDirectory)
-#     - task: CmdLine@2
-#       displayName: Install Terraform if not exists
-#       continueOnError: true
-#       condition: failed()
-#       inputs:
-#         script: |
-#           sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
-#           wget -O- https://apt.releases.hashicorp.com/gpg | \
-#           gpg --dearmor | \
-#           sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
-#           echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-#           https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
-#           sudo tee /etc/apt/sources.list.d/hashicorp.list
-#           sudo apt update
-#           sudo apt-get install terraform
-#         workingDirectory: $(System.DefaultWorkingDirectory)
-#   - job: BuildInfra
-#     dependsOn: InstallDependencies
-#     steps:
-#     - script: echo "Deploying Infrastructure..."
-#       displayName: 'Deploy Infrastructure'
-#     - task: AzureCLI@2
-#       inputs:
-#         azureSubscription: '$(azureServiceConnectionId)'
-#         scriptType: 'bash'
-#         scriptLocation: 'inlineScript'
-#         inlineScript: |
-#           az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
-#           az account set --subscription $(ARM_SUBSCRIPTION_ID)
-#           az group list --output table
+- stage: BuildInfrastructure
+  displayName: 'Build Infrastructure'
+  jobs:
+  - job: InstallDependencies
+    displayName: 'Install Dependencies' 
+    steps:
+    - task: CmdLine@2
+      displayName: Check Terraform Installed
+      inputs:
+        script: 'echo $(terraform -v)'
+        workingDirectory: $(System.DefaultWorkingDirectory)
+    - task: CmdLine@2
+      displayName: Install Terraform if not exists
+      continueOnError: true
+      condition: failed()
+      inputs:
+        script: |
+          sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+          wget -O- https://apt.releases.hashicorp.com/gpg | \
+          gpg --dearmor | \
+          sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+          https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+          sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update
+          sudo apt-get install terraform
+        workingDirectory: $(System.DefaultWorkingDirectory)
+  - job: BuildInfra
+    dependsOn: InstallDependencies
+    steps:
+    - script: echo "Deploying Infrastructure..."
+      displayName: 'Deploy Infrastructure'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: '$(azureServiceConnectionId)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az login --service-principal --username $(ARM_CLIENT_ID) --password $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
+          az account set --subscription $(ARM_SUBSCRIPTION_ID)
+          az group list --output table
 
-#     - task: TerraformInstaller@0
-#       inputs:
-#         terraformVersion: 'latest'
-#     - script: |
-#         terraform init -backend-config="storage_account_name=$(backendAzureRmStorageAccountName)" -backend-config="container_name=$(backendAzureRmContainerName)" -backend-config="access_key=$(ACCOUNT_KEY)" -backend-config="key=cicd/terraform.tfstate"
-#       displayName: 'Initialize Terraform'
-#       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
-#     - script: |
-#         terraform plan -out=tfplan
-#       displayName: 'Plan Terraform Deployment'
-#       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
-#     - script: |
-#         terraform apply -auto-approve tfplan
-#       displayName: 'Apply Terraform Deployment'
-#       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
-#     - script: |
-#         echo "Extracting output..."
-#         echo $(terraform output -raw app_service_name)
-#         output=$(terraform output -raw app_service_name)
-#         echo "##vso[task.setvariable variable=appServiceName]$output"
-#       displayName: 'Set App Service Name as Variable'
-#       name: exportOutput
-#       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
-# - stage: BuildDeployApplication
-#   dependsOn: BuildInfrastructure
-#   variables:
-#     appServiceName: $[ stageDependencies.BuildInfrastructure.InstallDependencies.outputs.exportOutput.appServiceName ]
-#   jobs:
-#   - job: BuildApp
-#     steps:    
-#       - script: |
-#           python3 -m pip install --upgrade pip
-#           python3 -m pip install setup
-#           python3 -m pip install -r requirements.txt
-#         workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
-#         displayName: 'myStep 1'
-#       - script: |
-#           export PATH=$HOME/.local/bin:$PATH
-#           make install
-#         workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
-#         displayName: 'myStep 2'
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: 'latest'
+    - script: |
+        terraform init -backend-config="storage_account_name=$(backendAzureRmStorageAccountName)" -backend-config="container_name=$(backendAzureRmContainerName)" -backend-config="access_key=$(ACCOUNT_KEY)" -backend-config="key=cicd/terraform.tfstate"
+      displayName: 'Initialize Terraform'
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+    - script: |
+        terraform plan -out=tfplan
+      displayName: 'Plan Terraform Deployment'
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+    - script: |
+        terraform apply -auto-approve tfplan
+      displayName: 'Apply Terraform Deployment'
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+    - script: |
+        echo "Extracting output..."
+        echo $(terraform output -raw app_service_name)
+        output=$(terraform output -raw app_service_name)
+        echo "##vso[task.setvariable variable=appServiceName]$output"
+      displayName: 'Set App Service Name as Variable'
+      name: exportOutput
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/environments/test
+- stage: BuildDeployApplication
+  dependsOn: BuildInfrastructure
+  variables:
+    appServiceName: $[ stageDependencies.BuildInfrastructure.InstallDependencies.outputs.exportOutput.appServiceName ]
+  jobs:
+  - job: BuildApp
+    steps:    
+      - script: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install setup
+          python3 -m pip install -r requirements.txt
+        workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
+        displayName: 'myStep 1'
+      - script: |
+          export PATH=$HOME/.local/bin:$PATH
+          make install
+        workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
+        displayName: 'myStep 2'
 
-#       - script: |
-#           export PATH=$HOME/.local/bin:$PATH
-#           make install
-#           make lint
-#         workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
-#         displayName:  'myStep 3 - Run lint tests'
+      - script: |
+          export PATH=$HOME/.local/bin:$PATH
+          make install
+          make lint
+        workingDirectory: $(System.DefaultWorkingDirectory)/fakeAPI
+        displayName:  'myStep 3 - Run lint tests'
 
-#       - task: ArchiveFiles@2
-#         displayName: 'myStep 4 - Archive files'
-#         inputs:
-#           rootFolderOrFile: $(System.DefaultWorkingDirectory)/fakeAPI
-#           includeRootFolder: false
-#           archiveType: zip
-#           archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-#           replaceExistingArchive: true
+      - task: ArchiveFiles@2
+        displayName: 'myStep 4 - Archive files'
+        inputs:
+          rootFolderOrFile: $(System.DefaultWorkingDirectory)/fakeAPI
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
 
-#       - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-#         displayName: 'myStep 5 - Upload package'
-#         artifact: drop
-#   - deployment: DeploymentJob
-#     dependsOn: BuildApp
-#     environment:
-#       name: myVMLinux
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - task: UsePythonVersion@0
-#             inputs:
-#               versionSpec: '$(pythonVersion)'
-#             displayName: 'Use Python version'
-#           - script: 'echo 123'
-#           - script: 'echo $(appServiceName)'
-#           - task: AzureWebApp@1
-#             displayName: 'Deploy Azure Web App : flask-ml-service'
-#             inputs:
-#               azureSubscription: $(azureServiceConnectionId)
-#               appName: myApplication-bachtn01-AppService
-#               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-#               appType: webAppLinux
+      - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        displayName: 'myStep 5 - Upload package'
+        artifact: drop
+  - deployment: DeploymentJob
+    dependsOn: BuildApp
+    environment:
+      name: myVMLinux
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(pythonVersion)'
+            displayName: 'Use Python version'
+          - script: 'echo 123'
+          - script: 'echo $(appServiceName)'
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App : flask-ml-service'
+            inputs:
+              azureSubscription: $(azureServiceConnectionId)
+              appName: myApplication-bachtn01-AppService
+              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+              appType: webAppLinux
 - stage: Test
-  # dependsOn: BuildDeployApplication
+  dependsOn: BuildDeployApplication
   jobs:
   - job: JUnitTest
     steps:
