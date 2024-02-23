@@ -202,8 +202,8 @@ stages:
       displayName: Run Data Validation Tests
       continueOnError: true
       inputs:
-        script: 'newman run StarerAPIs.json'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+        script: 'newman run StarerAPIs.json --reporters cli,junit --reporter-junit-export TEST-$(BuilBuild.BuildId).xml'
+        workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/postman
     # - task: CmdLine@2
     #   displayName: Run Regression Tests
     #   continueOnError: true
@@ -216,6 +216,6 @@ stages:
       inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: '**/TEST-*.xml'
-        searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+        searchFolder: $(System.DefaultWorkingDirectory)/automatedtesting/postman
         mergeTestResults: true
         testRunTitle: testRunTitle_$(BuilBuild.BuildIdd)
