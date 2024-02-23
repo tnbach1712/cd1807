@@ -237,10 +237,10 @@ stages:
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: 'output.xml'
-        failTaskOnFailedTests: true
-      displayName: 'RESULTS: Publish Load Testing Results'
-      workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
+        testResultsFiles: '**/TEST-*.xml'
+        searchFolder: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
+        mergeTestResults: true
+        testRunTitle: testRunTitle_$(Build.BuildId)
     - publish: $(System.DefaultWorkingDirectory)/results
       artifact: jmeter-results
       condition: succeededOrFailed()
