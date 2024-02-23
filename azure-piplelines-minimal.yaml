@@ -198,7 +198,7 @@ stages:
     #   inputs:
     #     script: 'npm install -g newman'
     #     workingDirectory: $(System.DefaultWorkingDirectory)
-    - task: CmdLine@2
+    - task: Bash@3
       displayName: Run Data Validation Tests
       continueOnError: true
       inputs:
