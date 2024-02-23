@@ -181,6 +181,18 @@ stages:
         else
             echo "Node.js (and npm) are already installed."
         fi
+        # Check if newman is installed
+        if ! command -v newman &> /dev/null
+        then
+            echo "Node.js (and npm) could not be found, installing..."
+            # Install Node.js and npm using nvm
+            # You can specify a version to install, or use 'node' for the latest version
+            npm install -g newman
+            
+            echo "newman installed successfully."
+        else
+            echo "newman are already installed."
+        fi
     # - task: CmdLine@2
     #   displayName: Install Newman
     #   inputs:
