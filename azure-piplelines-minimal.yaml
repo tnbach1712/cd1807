@@ -194,7 +194,7 @@ stages:
             echo "newman are already installed."
         fi
     - task: Bash@3
-      displayName: Run Data Validation Tests
+      displayName: Run Tests
       continueOnError: true
       inputs:
         targetType: 'inline'
@@ -209,7 +209,8 @@ stages:
           echo "NPM version: $(npm -v)"
           echo "Newman version: $(newman -v)"
           
-          newman run StarterAPIs.json --reporters cli,junit --reporter-junit-export TEST-$(Build.BuildId).xml
+          newman run Regression.json --reporters cli,junit --reporter-junit-export TEST-Regression-$(Build.BuildId).xml
+          newman run Datavalidate.json --reporters cli,junit --reporter-junit-export TEST-Datavalidate-$(Build.BuildId).xml
           echo $(ls)
         workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/postman
     - task: PublishTestResults@2

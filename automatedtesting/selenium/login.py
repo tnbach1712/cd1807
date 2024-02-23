@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 import time
+import logging
 
 # Initialize Chrome options
 options = ChromeOptions()
@@ -18,11 +19,13 @@ options.add_argument("--remote-debugging-port=9222")
 
 # Initialize the driver with the options
 driver = webdriver.Chrome(options=options)
+logging.basicConfig(filename='selenium.log', format='%(asctime)s:%(levelname)s:%(message)s')
 
 try:
     # Open the SauceDemo login page
     driver.get("https://www.saucedemo.com/")
-
+    logging.info(f"Load page https://www.saucedemo.com success ")
+    
     # Locate the username field, enter the username
     driver.find_element(By.ID, "user-name").send_keys("standard_user")
 
@@ -38,7 +41,7 @@ try:
     )
 
     # If no exceptions were thrown, login was successful
-    print("Login successful.")
+    logging.info("Login successful.")
 
     driver.save_screenshot("results/login_successful.png")
 
@@ -46,13 +49,13 @@ try:
     items_added = []
     for i in range(1, 7):
         items = driver.find_elements(By.CLASS_NAME, "btn_inventory")
-        print(len(items))
+        logging.info(len(items))
         item=items[i-1]
         items_added.append(item.get_attribute("id").replace('add-to-cart-', ''))
         item.click()
         time.sleep(1)  # Sleep to ensure the item is added before proceeding
     driver.save_screenshot("results/add_cart.png")
-    print(f"User 'standard_user' logged in and added items: {items_added}")
+    logging.info(f"User 'standard_user' logged in and added items: {items_added}")
 
     # Remove 4 items from the cart
     items_removed = []
@@ -63,11 +66,11 @@ try:
         time.sleep(1)  # Sleep to ensure the item is removed before proceeding
     driver.save_screenshot("results/remove_cart.png")
 
-    print(f"Items removed from cart: {items_removed}")
+    logging.info(f"Items removed from cart: {items_removed}")
 
     # Take a screenshot
 except Exception as e:
-    print(f"Test failed: {e}")
+    logging.info(f"Test failed: {e}")
 
 finally:
     # Close the browser window
