@@ -226,7 +226,7 @@ stages:
         echo "Check JMeter installation..."
         # Add JMeter installation script here if necessary
         echo "Running JMeter tests..."
-        jmeter -n -t Starter.jmx -l results/results.jtl -j results/output.log -e -o results
+        jmeter -n -t Starter.jmx -l results/results.jtl -j results/output.log -e -o report
       displayName: 'Run JMeter Endurance Tests'
       workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
     - script: |
@@ -243,7 +243,7 @@ stages:
         searchFolder: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
         mergeTestResults: true
         testRunTitle: jmeter_$(Build.BuildId)
-    - publish: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/results
+    - publish: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/report
       artifact: jmeter-results
       condition: succeededOrFailed()
       displayName: 'RESULTS: Publish Load Test Artifacts'
