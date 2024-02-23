@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Starter APIs" tests="2" time="1.225">
+  <testsuite name="Create Employee" id="0a0812da-fb3e-4655-8bef-9cfc6637d7da" timestamp="2024-02-23T05:42:02.552Z" tests="1" failures="0" errors="0" time="0.915">
+    <testcase name="Successful response" time="0.915" classname="StarterApIs"/>
+  </testsuite>
+  <testsuite name="Get All Employees" id="375b5f25-a9e5-437b-a7ff-0fa22ad390ba" timestamp="2024-02-23T05:42:02.552Z" tests="1" failures="1" errors="0" time="0.310">
+    <testcase name="Successful response" time="0.310" classname="StarterApIs">
+      <failure type="AssertionFailure" message="expected '&lt;!DOCTYPE html>\n&lt;html lang=&quot;en&quot;>\n  …' to include 'success'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 968b3a18-cc72-48a2-9b6b-e8619b4aaca8.]]>
+        <![CDATA[Collection name: Starter APIs.]]>
+        <![CDATA[Request name: Get All Employees.]]>
+        <![CDATA[Test description: Successful response.]]>
+        <![CDATA[Error message: expected '<!DOCTYPE html>\n<html lang="en">\n  …' to include 'success'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '<!DOCTYPE html>\n<html lang="en">\n  …' to include 'success'
+   at Object.eval sandbox-script.js:1:2).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>
