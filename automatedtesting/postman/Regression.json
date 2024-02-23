@@ -1,0 +1,58 @@
+123
+{
+	"info": {
+		"_postman_id": "c2d08776-28e8-4da9-8889-cd440040b45e",
+		"name": "exam",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21071802"
+	},
+	"item": [
+		{
+			"name": "Regression Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 5000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"",
+							"pm.test(\"Body contains user id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].id).to.eql(546);",
+							"});",
+							"",
+							"pm.test(\"Body contains expected user name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].username).to.eql(\"John\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://myapplication-bachtn01-appservice.azurewebsites.net/users",
+					"protocol": "https",
+					"host": [
+						"myapplication-bachtn01-appservice",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
