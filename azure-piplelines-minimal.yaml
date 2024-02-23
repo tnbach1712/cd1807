@@ -226,7 +226,7 @@ stages:
         echo "Check JMeter installation..."
         # Add JMeter installation script here if necessary
         echo "Running JMeter tests..."
-        jmeter -n -t Starter.jmx -l results/results.jtl -j results/output.log -e -o report
+        jmeter -n -t Starter.jmx -l results/results.jtl -j results/output.log -e -o results
       displayName: 'Run JMeter Endurance Tests'
       workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
     - script: |
