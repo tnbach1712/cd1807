@@ -5,11 +5,11 @@ pool:
   name: Default
 
 variables:
-  azureServiceConnectionId: '1af1dddc-cbba-49a8-895f-e86fe3b8e550' #'myServiceConnection'
+  azureServiceConnectionId: '6dbe17bd-2298-4cdd-9817-797ae7eedcad' #'myServiceConnection'
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
   backendAzureRmResourceGroupName: 'Azuredevops'
-  backendAzureRmStorageAccountName: 'tfstate302478722'
+  backendAzureRmStorageAccountName: 'tfstate1063021378'
   backendAzureRmContainerName: 'tfstate'
   subscriptionID: de282839-e67a-4cbe-a2a6-de7145c67f52
   ARM_CLIENT_ID: a98bebc2-b950-474d-ba23-ed538f34dc9b
@@ -17,7 +17,7 @@ variables:
   ARM_SUBSCRIPTION_ID: de282839-e67a-4cbe-a2a6-de7145c67f52
   ARM_TENANT_ID: f958e84a-92b8-439f-a62d-4f45996b6d07
   pythonVersion: 3.8
-  ACCOUNT_KEY: rA+dzT5DStcajt8A14VRmMkaxMo6JmBm0q+ilchNmvVLEGSTCrUMCBPnkii4KKNit0EZd2jbZuZJ+AStEBYQOQ==
+  ACCOUNT_KEY: z2ezv7i2OYnoeWkizRcRVJA0al/38WzCzdk/B6ZC9zGH6oe2VxJelNJ4nNvoQ08Ke1mCBT8h/hjm+AStPmudpQ==
 stages:
 - stage: BuildInfrastructure
   displayName: 'Build Infrastructure'

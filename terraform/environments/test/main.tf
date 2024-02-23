@@ -8,10 +8,10 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    storage_account_name = "tfstate302478722"
+    storage_account_name = "tfstate1063021378"
     container_name       = "tfstate"
     key                  = "test.terraform.tfstate"
-    access_key           = "rA+dzT5DStcajt8A14VRmMkaxMo6JmBm0q+ilchNmvVLEGSTCrUMCBPnkii4KKNit0EZd2jbZuZJ+AStEBYQOQ=="
+    access_key           = "z2ezv7i2OYnoeWkizRcRVJA0al/38WzCzdk/B6ZC9zGH6oe2VxJelNJ4nNvoQ08Ke1mCBT8h/hjm+AStPmudpQ=="
   }
 }
 # module "resource_group" {

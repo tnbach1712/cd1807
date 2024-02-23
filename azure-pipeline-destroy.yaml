@@ -5,11 +5,11 @@ pool:
   name: Default
 
 variables:
-  azureServiceConnectionId: '1af1dddc-cbba-49a8-895f-e86fe3b8e550' #'myServiceConnection'
+  azureServiceConnectionId: '6dbe17bd-2298-4cdd-9817-797ae7eedcad' #'myServiceConnection'
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
   backendAzureRmResourceGroupName: 'Azuredevops'
-  backendAzureRmStorageAccountName: 'tfstate809015124'
+  backendAzureRmStorageAccountName: 'tfstate1063021378'
   backendAzureRmContainerName: 'tfstate'
   subscriptionID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
   ARM_CLIENT_ID: 63233d70-86e2-458d-b76a-ed3bb9831097

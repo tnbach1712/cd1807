@@ -11,10 +11,10 @@
 
 
 
-subscription_id = "de282839-e67a-4cbe-a2a6-de7145c67f52"
+subscription_id = "e2c7cd99-c3c5-4a90-9109-02e7d50f8311"
 tenant_id = "f958e84a-92b8-439f-a62d-4f45996b6d07"
-client_id = "a98bebc2-b950-474d-ba23-ed538f34dc9b"
-client_secret = "cCm8Q~T4xH9cW92VixauW4epMyxcn-jzsEh9qa0y"
+client_id = "4e11e6e8-d1d5-45eb-8c59-79544f9f17c8"
+client_secret = "dIx8Q~Xomi-Z3c0HyVClmlHhbv7PJ3mcUXKwOavb"
 
 # Resource Group/Location
 location = "East US"
