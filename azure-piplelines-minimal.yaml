@@ -199,7 +199,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          echo pwd
+          echo $(pwd)
           echo $(newman -v)
           echo $(nvm -v)
           echo $(npm -v)
