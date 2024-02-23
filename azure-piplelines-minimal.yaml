@@ -213,7 +213,7 @@ stages:
           echo $(nvm -v)
           echo $(npm -v)
           echo $(ls)
-          newman run StarerAPIs.json --reporters cli,junit --reporter-junit-export TEST-$(Build.BuildId).xml
+          newman run StarterAPIs.json --reporters cli,junit --reporter-junit-export TEST-$(Build.BuildId).xml
           echo $(ls)
         workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/postman
     - task: PublishTestResults@2
