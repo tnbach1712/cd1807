@@ -208,11 +208,7 @@ stages:
           echo "Node version: $(node -v)"
           echo "NPM version: $(npm -v)"
           echo "Newman version: $(newman -v)"
-          echo $(pwd)
-          echo $(newman -v)
-          echo $(nvm -v)
-          echo $(npm -v)
-          echo $(ls)
+          
           newman run StarterAPIs.json --reporters cli,junit --reporter-junit-export TEST-$(Build.BuildId).xml
           echo $(ls)
         workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/postman
@@ -223,3 +219,34 @@ stages:
         searchFolder: $(System.DefaultWorkingDirectory)
         mergeTestResults: true
         testRunTitle: testRunTitle_$(Build.BuildId)
+  - job: JmeterTest
+    steps:
+    - script: |
+        echo "Check JMeter installation..."
+        # Add JMeter installation script here if necessary
+        echo "Running JMeter tests..."
+        jmeter -n -t Starter.jmx -l results/results.jtl -j results/output.log -e -o report
+      displayName: 'Run JMeter Endurance Tests'
+      workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
+    - script: |
+        JMETER_RESULTS=results/results.jtl
+        JUNIT_RESULTS=output.xml
+        python3 jtl_junit_converter.py $JMETER_RESULTS $JUNIT_RESULTS
+      workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
+      displayName: 'RESULTS: Convert JMeter Results to JUnit Format'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: 'output.xml'
+        failTaskOnFailedTests: true
+      displayName: 'RESULTS: Publish Load Testing Results'
+      workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
+    - publish: $(System.DefaultWorkingDirectory)/results
+      artifact: jmeter-results
+      condition: succeededOrFailed()
+      displayName: 'RESULTS: Publish Load Test Artifacts'
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish JMeter HTML Report'
+      inputs:
+        targetPath: report
+        artifact: jmeter-report
