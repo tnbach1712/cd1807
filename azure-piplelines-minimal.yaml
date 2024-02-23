@@ -255,3 +255,18 @@ stages:
         path: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/report
         artifact: 'jmeter-report'
       displayName: 'Publish JMeter HTML Report'
+  - job: SeleniumTest
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python version'
+    - script: |
+        mkdir -p results
+        python3 login.py
+      workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/selenium
+      displayName: "Run function test"
+    - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/results
+      artifact: 'selenium-results'
+      condition: succeededOrFailed()
+      displayName: 'Publish Function Test Artifacts'
