@@ -199,6 +199,15 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+          
+          # Now nvm, node, npm, and newman should be accessible
+          echo "Current working directory: $(pwd)"
+          echo "Node version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          echo "Newman version: $(newman -v)"
           echo $(pwd)
           echo $(newman -v)
           echo $(nvm -v)
