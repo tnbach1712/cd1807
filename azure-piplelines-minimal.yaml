@@ -222,6 +222,7 @@ stages:
   - job: JmeterTest
     steps:
     - script: |
+        export PATH=$PATH:/opt/jmeter/bin
         echo "Check JMeter installation..."
         # Add JMeter installation script here if necessary
         echo "Running JMeter tests..."
@@ -229,6 +230,7 @@ stages:
       displayName: 'Run JMeter Endurance Tests'
       workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
     - script: |
+        export PATH=$PATH:/opt/jmeter/bin
         JMETER_RESULTS=results/results.jtl
         JUNIT_RESULTS=output.xml
         python3 jtl_junit_converter.py $JMETER_RESULTS $JUNIT_RESULTS
@@ -237,7 +239,7 @@ stages:
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '**/TEST-*.xml'
+        testResultsFiles: '**/output.xml'
         searchFolder: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
         mergeTestResults: true
         testRunTitle: testRunTitle_$(Build.BuildId)
