@@ -201,6 +201,9 @@ stages:
         script: |
           echo pwd
           echo $(newman -v)
+          echo $(nvm -v)
+          echo $(npm -v)
+          ehco $(ls)
           newman run StarerAPIs.json --reporters cli,junit --reporter-junit-export TEST-$(BuilBuild.BuildId).xml 
         workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/postman
     - task: PublishTestResults@2
