@@ -242,7 +242,7 @@ stages:
         testResultsFiles: '**/output.xml'
         searchFolder: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
         mergeTestResults: true
-        testRunTitle: testRunTitle_$(Build.BuildId)
+        testRunTitle: jmeter_$(Build.BuildId)
     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/results
       artifact: jmeter-results
       condition: succeededOrFailed()
