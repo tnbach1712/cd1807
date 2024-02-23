@@ -151,36 +151,36 @@ stages:
     - script: "echo $(node -v)"
     - script: "echo $(npm -v)"
     - script: |
-      if ! command -v nvm &> /dev/null
-      then
-          echo "nvm could not be found, installing..."
-          # Install nvm
-          # This fetches the install script from nvm's GitHub repository and executes it
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-          
-          # Source nvm script to make it available in the current session
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-          
-          echo "nvm installed successfully."
-      else
-          echo "nvm is already installed."
-      fi
+        if ! command -v nvm &> /dev/null
+        then
+            echo "nvm could not be found, installing..."
+            # Install nvm
+            # This fetches the install script from nvm's GitHub repository and executes it
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+            
+            # Source nvm script to make it available in the current session
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+            
+            echo "nvm installed successfully."
+        else
+            echo "nvm is already installed."
+        fi
 
-      # Check if npm is installed
-      # Since npm comes with Node.js, we check for Node.js instead
-      if ! command -v node &> /dev/null
-      then
-          echo "Node.js (and npm) could not be found, installing..."
-          # Install Node.js and npm using nvm
-          # You can specify a version to install, or use 'node' for the latest version
-          nvm install 16
-          
-          echo "Node.js (and npm) installed successfully."
-      else
-          echo "Node.js (and npm) are already installed."
-      fi
+        # Check if npm is installed
+        # Since npm comes with Node.js, we check for Node.js instead
+        if ! command -v node &> /dev/null
+        then
+            echo "Node.js (and npm) could not be found, installing..."
+            # Install Node.js and npm using nvm
+            # You can specify a version to install, or use 'node' for the latest version
+            nvm install 16
+            
+            echo "Node.js (and npm) installed successfully."
+        else
+            echo "Node.js (and npm) are already installed."
+        fi
     - task: CmdLine@2
       displayName: Install Newman
       inputs:
