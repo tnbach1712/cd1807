@@ -146,7 +146,7 @@ stages:
 - stage: Test
   dependsOn: BuildDeployApplication
   jobs:
-  - job: JUnitTest
+  - job: PostmanTest
     steps:
     - script: "echo $(node -v)"
     - script: "echo $(npm -v)"
