@@ -17,7 +17,7 @@ client_id = "9bda002f-f067-4c27-99cd-924e35a8bf13"
 client_secret = "fEN8Q~fUADXV.lykOY3Vq7duhWcniUIaTJyNJc8y"
 
 # Resource Group/Location
-location = "East US"
+location = "Southeast Asia"
 resource_group = "Azuredevops"
 application_type = "myApplication-bachtn01"
 

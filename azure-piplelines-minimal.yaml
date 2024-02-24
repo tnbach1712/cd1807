@@ -9,7 +9,7 @@ variables:
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
   backendAzureRmResourceGroupName: 'Azuredevops'
-  backendAzureRmStorageAccountName: 'tfstate1293216344'
+  backendAzureRmStorageAccountName: 'tfstate97012100'
   backendAzureRmContainerName: 'tfstate'
   subscriptionID: 44ada2e4-89f9-41cc-8efc-3cf76cd05c0c
   ARM_CLIENT_ID: 9bda002f-f067-4c27-99cd-924e35a8bf13
@@ -17,7 +17,7 @@ variables:
   ARM_SUBSCRIPTION_ID: 44ada2e4-89f9-41cc-8efc-3cf76cd05c0c
   ARM_TENANT_ID: f958e84a-92b8-439f-a62d-4f45996b6d07
   pythonVersion: 3.8
-  ACCOUNT_KEY: burXQMxoxdCbKLjycBtvsbB2dCbbm8FKKKy0dSDj2MkiptrJIbwWAzXogxjJiuMXDLIorn6DVrRw+ASt9uU/fQ==
+  ACCOUNT_KEY: I1ReY4M6kxkk1x5PaUMjIfcDtolUP7Q6h45CHXN4ThUDVukuD4sO36HZJsjuY4HkAVq7XzYBWx57+AStWa0WgA==
 stages:
 - stage: BuildInfrastructure
   displayName: 'Build Infrastructure'

@@ -9,7 +9,7 @@ variables:
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'test'
   backendAzureRmResourceGroupName: 'Azuredevops'
-  backendAzureRmStorageAccountName: 'tfstate1293216344'
+  backendAzureRmStorageAccountName: 'tfstate97012100'
   backendAzureRmContainerName: 'tfstate'
   subscriptionID: a4b11da3-2642-4ae2-b8e0-ba40545a13d6
   ARM_CLIENT_ID: 63233d70-86e2-458d-b76a-ed3bb9831097
